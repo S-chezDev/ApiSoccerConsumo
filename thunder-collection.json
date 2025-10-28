@@ -1,0 +1,190 @@
+{
+  "version": "1.0",
+  "name": "Football Status - Thunder Client (with examples)",
+  "env": {
+    "name": "Local",
+    "values": {
+      "baseUrl": "http://localhost:3000",
+      "apiKey": "PUT_YOUR_API_KEY_HERE"
+    }
+  },
+  "requests": [
+    {
+      "name": "Get status (local)",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/status",
+      "headers": [
+        { "key": "Accept", "value": "application/json" }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "headers": {
+            "content-type": "application/json",
+            "x-ratelimit-requests-limit": "100",
+            "x-ratelimit-requests-remaining": "88",
+            "X-RateLimit-Limit": "60",
+            "X-RateLimit-Remaining": "58"
+          },
+          "body": {
+            "get": "status",
+            "parameters": [],
+            "errors": [],
+            "results": 1,
+            "response": {
+              "account": {
+                "firstname": "xxxx",
+                "lastname": "XXXXXX",
+                "email": "xxx@xxx.com"
+              },
+              "subscription": {
+                "plan": "Free",
+                "end": "2020-04-10T23:24:27+00:00",
+                "active": true
+              },
+              "requests": {
+                "current": 12,
+                "limit_day": 100
+              }
+            }
+          }
+        },
+        {
+          "status": 429,
+          "headers": { "content-type": "application/json" },
+          "body": { "success": false, "message": "Too many requests" }
+        }
+      ]
+    },
+
+    {
+      "name": "Get account",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/status/account",
+      "headers": [ { "key": "Accept", "value": "application/json" } ],
+      "responses": [
+        {
+          "status": 200,
+          "headers": { "content-type": "application/json" },
+          "body": {
+            "firstname": "xxxx",
+            "lastname": "XXXXXX",
+            "email": "xxx@xxx.com"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Get requests",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/status/requests",
+      "headers": [ { "key": "Accept", "value": "application/json" } ],
+      "responses": [
+        {
+          "status": 200,
+          "headers": { "content-type": "application/json" },
+          "body": { "current": 12, "limit_day": 100 }
+        }
+      ]
+    },
+
+    {
+      "name": "Get headers",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/status/headers",
+      "headers": [ { "key": "Accept", "value": "application/json" } ],
+      "responses": [
+        {
+          "status": 200,
+          "headers": { "content-type": "application/json" },
+          "body": {
+            "x-ratelimit-requests-limit": "100",
+            "x-ratelimit-requests-remaining": "88",
+            "X-RateLimit-Limit": "60",
+            "X-RateLimit-Remaining": "58"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Get cache",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/status/cache",
+      "headers": [ { "key": "Accept", "value": "application/json" } ],
+      "responses": [
+        {
+          "status": 200,
+          "headers": { "content-type": "application/json" },
+          "body": {
+            "cached": true,
+            "ttlSecondsRemaining": 540,
+            "data": {
+              "get": "status",
+              "response": {
+                "account": { "firstname": "xxxx", "lastname": "XXXXXX", "email": "xxx@xxx.com" },
+                "requests": { "current": 12, "limit_day": 100 }
+              }
+            }
+          }
+        },
+        {
+          "status": 200,
+          "headers": { "content-type": "application/json" },
+          "body": { "cached": false, "message": "No hay datos en caché para la clave status" }
+        }
+      ]
+    },
+
+    {
+      "name": "Health",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/health",
+      "headers": [ { "key": "Accept", "value": "application/json" } ],
+      "responses": [
+        {
+          "status": 200,
+          "headers": { "content-type": "application/json" },
+          "body": {
+            "status": "ok",
+            "uptimeSeconds": 12345.67,
+            "version": "1.0.0",
+            "timestamp": "2025-10-27T12:34:56.789Z"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "External API (direct) - status",
+      "method": "GET",
+      "url": "https://v3.football.api-sports.io/status",
+      "headers": [
+        { "key": "x-apisports-key", "value": "{{apiKey}}" },
+        { "key": "Accept", "value": "application/json" }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "headers": {
+            "content-type": "application/json",
+            "x-ratelimit-requests-limit": "100",
+            "x-ratelimit-requests-remaining": "88"
+          },
+          "body": {
+            "get": "status",
+            "parameters": [],
+            "errors": [],
+            "results": 1,
+            "response": {
+              "account": { "firstname": "xxxx", "lastname": "XXXXXX", "email": "xxx@xxx.com" },
+              "subscription": { "plan": "Free", "end": "2020-04-10T23:24:27+00:00", "active": true },
+              "requests": { "current": 12, "limit_day": 100 }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
